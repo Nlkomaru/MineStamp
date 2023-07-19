@@ -3,8 +3,14 @@ package dev.nikomaru.emojistamp.command
 import cloud.commandframework.annotations.Argument
 import cloud.commandframework.annotations.CommandMethod
 import cloud.commandframework.annotations.specifier.Range
+import com.comphenix.protocol.PacketType
+import com.comphenix.protocol.ProtocolLibrary
+import com.comphenix.protocol.events.PacketContainer
+import com.comphenix.protocol.wrappers.EnumWrappers
+import com.comphenix.protocol.wrappers.WrappedParticle
 import com.destroystokyo.paper.ParticleBuilder
 import dev.nikomaru.emojistamp.EmojiStamp
+import dev.nikomaru.emojistamp.utils.coroutines.minecraft
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -14,11 +20,12 @@ import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.inventory.meta.trim.TrimMaterial.REDSTONE
 import javax.imageio.ImageIO
 import kotlin.math.cos
 import kotlin.math.sin
 
-@CommandMethod("emost color")
+@CommandMethod("emost|emojistamp|es color")
 class ColorEmojiCommand {
 
 
@@ -40,13 +47,9 @@ class ColorEmojiCommand {
             sender.sendPlainMessage("その絵文字は存在しません")
             return
         }
-        if (EmojiCommand.coolingTime[sender] == true) {
-            sender.sendPlainMessage("クールダウン中です")
-            return
-        }
+
         val time = inputTime ?: 1
         val size = inputSize ?: 1
-        val particleSize = inputParticleSize ?: 1
 
         val location = sender.location
 
@@ -72,32 +75,36 @@ class ColorEmojiCommand {
         val midWidth = width / 2 // 80
         val height = (yMax - yMin).toDouble()
 
-        val particleBuilder = ParticleBuilder(Particle.REDSTONE)
-        particleBuilder.location(location)
+        val pm = ProtocolLibrary.getProtocolManager()
 
-        EmojiStamp.plugin.server.scheduler.runTaskAsynchronously(EmojiStamp.plugin, Runnable {
+        val players = withContext(Dispatchers.minecraft) {
+            location.getNearbyPlayers(20.0)
+        }
 
-            repeat(10 * time) {
-                list.forEach {
-                    val position = it.first
-                    val x = (position.first - (xMin + midWidth)) / width * 3 * size // 80 / 160 * 3 = 1.5
-                    val y = (yMax - position.second) / height * 3 * size
-                    val particleLocation = Location(
-                        location.world,
-                        location.x + (x * cos(-location.yaw.toDouble() / 180 * Math.PI)),
-                        location.y + y + 2,
-                        location.z + (x * sin(location.yaw.toDouble() / 180 * Math.PI))
-                    )
-                    particleBuilder.data(Particle.DustOptions(Color.fromARGB(it.second), 0.5f * particleSize))
-                    particleBuilder.location(particleLocation)
-                    particleBuilder.spawn()
-//            sender.world.spawnParticle(Particle.REDSTONE, location, 5, Particle.DustOptions(bukkitColor, 0.5f))
+        repeat(20 * time) {
+            list.forEach {
+                val position = it.first
+                val x = (position.first - (xMin + midWidth)) / width * 3 * size // 80 / 160 * 3 = 1.5
+                val y = (yMax - position.second) / height * 3 * size
+                val particleLocation = Location(
+                    location.world,
+                    location.x + (x * cos(-location.yaw.toDouble() / 180 * Math.PI)),
+                    location.y + y + 2,
+                    location.z + (x * sin(location.yaw.toDouble() / 180 * Math.PI))
+                )
+                val packet = pm.createPacket(PacketType.Play.Server.WORLD_PARTICLES)
+                packet.newParticles.write(
+                    0,
+                    WrappedParticle.create(Particle.REDSTONE, Particle.DustOptions(Color.fromARGB(it.second), 0.5f))
+                )
+                packet.doubles.write(0, particleLocation.x)
+                    .write(1, particleLocation.y)
+                    .write(2, particleLocation.z)
+                players.forEach { player ->
+                    pm.sendServerPacket(player, packet)
                 }
-                Thread.sleep(50)
             }
-        })
-        EmojiCommand.coolingTime[sender] = true
-        delay(1000 * 5)
-        EmojiCommand.coolingTime.remove(sender)
+            delay(50L)
+        }
     }
 }

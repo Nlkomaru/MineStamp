@@ -71,7 +71,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20.1")
     }
 }
 
@@ -87,5 +87,6 @@ bukkit {
         "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.11.0",
         "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.11.0"
     )
+    depend = listOf("ProtocolLib")
     description = "An EmojiStamp" // need to change
 }

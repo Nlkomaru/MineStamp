@@ -7,11 +7,9 @@ import cloud.commandframework.kotlin.coroutines.annotations.installCoroutineSupp
 import cloud.commandframework.meta.SimpleCommandMeta
 import cloud.commandframework.paper.PaperCommandManager
 import dev.nikomaru.emojistamp.command.ColorEmojiCommand
-import dev.nikomaru.emojistamp.command.EmojiCommand
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Font
-import java.awt.image.BufferedImage
 import java.util.*
 
 
@@ -63,7 +61,6 @@ class EmojiStamp : JavaPlugin() {
         }.installCoroutineSupport()
 
         with(annotationParser) {
-            parse(EmojiCommand())
             parse(ColorEmojiCommand())
         }
     }
