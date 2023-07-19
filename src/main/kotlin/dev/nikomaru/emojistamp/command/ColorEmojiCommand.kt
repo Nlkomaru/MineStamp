@@ -3,6 +3,8 @@ package dev.nikomaru.emojistamp.command
 import cloud.commandframework.annotations.Argument
 import cloud.commandframework.annotations.CommandMethod
 import cloud.commandframework.annotations.specifier.Range
+import cloud.commandframework.annotations.suggestions.Suggestions
+import cloud.commandframework.context.CommandContext
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.PacketContainer
@@ -106,5 +108,10 @@ class ColorEmojiCommand {
             }
             delay(50L)
         }
+    }
+
+    @Suggestions("cldr")
+    fun suggestCldr(sender: CommandContext<CommandSender>, input: String?): List<String> {
+        return EmojiStamp.emojiProperties.keys.map { it.toString() }
     }
 }
