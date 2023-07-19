@@ -40,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/libs/NoticeTemplate-1.0-SNAPSHOT-all.jar # change name of artifact
-          asset_name: NoticeTemplate_${{ steps.tag_version.outputs.new_tag }}.jar # change name of artifact
+          asset_path: ./build/libs/EmojiStamp-1.0-SNAPSHOT-all.jar # change name of artifact
+          asset_name: EmojiStamp_${{ steps.tag_version.outputs.new_tag }}.jar # change name of artifact
           asset_content_type: application/jar
