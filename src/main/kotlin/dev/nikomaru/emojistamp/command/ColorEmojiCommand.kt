@@ -12,6 +12,7 @@ import com.comphenix.protocol.wrappers.EnumWrappers
 import com.comphenix.protocol.wrappers.WrappedParticle
 import com.destroystokyo.paper.ParticleBuilder
 import dev.nikomaru.emojistamp.EmojiStamp
+import dev.nikomaru.emojistamp.utils.coroutines.async
 import dev.nikomaru.emojistamp.utils.coroutines.minecraft
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -83,30 +84,32 @@ class ColorEmojiCommand {
             location.getNearbyPlayers(20.0)
         }
 
-        repeat(20 * time) {
-            list.forEach {
-                val position = it.first
-                val x = (position.first - (xMin + midWidth)) / width * 3 * size // 80 / 160 * 3 = 1.5
-                val y = (yMax - position.second) / height * 3 * size
-                val particleLocation = Location(
-                    location.world,
-                    location.x + (x * cos(-location.yaw.toDouble() / 180 * Math.PI)),
-                    location.y + y + 2,
-                    location.z + (x * sin(location.yaw.toDouble() / 180 * Math.PI))
-                )
-                val packet = pm.createPacket(PacketType.Play.Server.WORLD_PARTICLES)
-                packet.newParticles.write(
-                    0,
-                    WrappedParticle.create(Particle.REDSTONE, Particle.DustOptions(Color.fromARGB(it.second), 0.5f))
-                )
-                packet.doubles.write(0, particleLocation.x)
-                    .write(1, particleLocation.y)
-                    .write(2, particleLocation.z)
-                players.forEach { player ->
-                    pm.sendServerPacket(player, packet)
+        withContext(Dispatchers.async){
+            repeat(20 * time) {
+                list.forEach {
+                    val position = it.first
+                    val x = (position.first - (xMin + midWidth)) / width * 3 * size // 80 / 160 * 3 = 1.5
+                    val y = (yMax - position.second) / height * 3 * size
+                    val particleLocation = Location(
+                        location.world,
+                        location.x + (x * cos(-location.yaw.toDouble() / 180 * Math.PI)),
+                        location.y + y + 2,
+                        location.z + (x * sin(location.yaw.toDouble() / 180 * Math.PI))
+                    )
+                    val packet = pm.createPacket(PacketType.Play.Server.WORLD_PARTICLES)
+                    packet.newParticles.write(
+                        0,
+                        WrappedParticle.create(Particle.REDSTONE, Particle.DustOptions(Color.fromARGB(it.second), 0.5f))
+                    )
+                    packet.doubles.write(0, particleLocation.x)
+                        .write(1, particleLocation.y)
+                        .write(2, particleLocation.z)
+                    players.forEach { player ->
+                        pm.sendServerPacket(player, packet)
+                    }
                 }
+                delay(50L)
             }
-            delay(50L)
         }
     }
 
