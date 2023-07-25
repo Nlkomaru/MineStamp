@@ -16,11 +16,11 @@ import java.util.*
 class EmojiStamp : JavaPlugin() {
 
     companion object {
-        lateinit var font : Font
-        lateinit var emojiProperties : Properties
+        lateinit var font: Font
+        lateinit var emojiProperties: Properties
+        lateinit var limitedEmojiProperties: Properties
         lateinit var plugin: JavaPlugin
     }
-
 
 
     override fun onEnable() {
@@ -30,8 +30,16 @@ class EmojiStamp : JavaPlugin() {
             Font.TRUETYPE_FONT,
             this.javaClass.classLoader.getResourceAsStream("NotoEmoji-VariableFont_wght.ttf")
         )
-        val br = this.javaClass.classLoader.getResourceAsStream("emoji.properties")
+        val file = plugin.dataFolder.resolve("emoji.properties")
+        if (file.exists()) {
+            limitedEmojiProperties = Properties()
+            limitedEmojiProperties.load(file.inputStream())
+        }
 
+        if (!plugin.dataFolder.exists()) {
+            plugin.dataFolder.mkdir()
+        }
+        val br = this.javaClass.classLoader.getResourceAsStream("emoji.properties")
         emojiProperties = Properties()
         emojiProperties.load(br)
 
