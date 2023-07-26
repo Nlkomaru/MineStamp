@@ -115,7 +115,7 @@ class ColorEmojiCommand {
             sender.sendPlainMessage("プレイヤーから実行してください")
             return
         }
-        if (!EmojiStamp.emojiProperties.containsKey(cldr)) {
+        if (!EmojiStamp.limitedEmojiProperties.containsKey(cldr)) {
             sender.sendPlainMessage("その絵文字は存在しません")
             return
         }
