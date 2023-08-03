@@ -7,6 +7,8 @@ import cloud.commandframework.kotlin.coroutines.annotations.installCoroutineSupp
 import cloud.commandframework.meta.SimpleCommandMeta
 import cloud.commandframework.paper.PaperCommandManager
 import dev.nikomaru.emojistamp.command.ColorEmojiCommand
+import dev.nikomaru.emojistamp.event.LoginEvent
+import dev.nikomaru.emojistamp.files.Config
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Font
@@ -18,8 +20,8 @@ class EmojiStamp : JavaPlugin() {
     companion object {
         lateinit var font: Font
         lateinit var emojiProperties: Properties
-        lateinit var limitedEmojiProperties: Properties
         lateinit var plugin: JavaPlugin
+        val playerEmoji = mutableMapOf<UUID, List<String>>()
     }
 
 
@@ -30,11 +32,6 @@ class EmojiStamp : JavaPlugin() {
             Font.TRUETYPE_FONT,
             this.javaClass.classLoader.getResourceAsStream("NotoEmoji-VariableFont_wght.ttf")
         )
-        val file = plugin.dataFolder.resolve("emoji.properties")
-        if (file.exists()) {
-            limitedEmojiProperties = Properties()
-            limitedEmojiProperties.load(file.inputStream())
-        }
 
         if (!plugin.dataFolder.exists()) {
             plugin.dataFolder.mkdir()
@@ -43,11 +40,27 @@ class EmojiStamp : JavaPlugin() {
         emojiProperties = Properties()
         emojiProperties.load(br)
 
+        makeFolder()
+        Config.loadConfig()
         setCommand()
+        setEvent()
     }
 
     override fun onDisable() {
         // Plugin shutdown logic
+    }
+
+    private fun makeFolder() {
+        if (!plugin.dataFolder.exists()) {
+            plugin.dataFolder.mkdir()
+        }
+        if (!plugin.dataFolder.resolve("image").exists()) {
+            plugin.dataFolder.resolve("image").mkdir()
+        }
+        val file = plugin.dataFolder.resolve("emoji.properties")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
     }
 
     private fun setCommand() {
@@ -72,4 +85,9 @@ class EmojiStamp : JavaPlugin() {
             parse(ColorEmojiCommand())
         }
     }
+
+    private fun setEvent() {
+        server.pluginManager.registerEvents(LoginEvent(), this)
+    }
+
 }

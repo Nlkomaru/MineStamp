@@ -1,10 +1,10 @@
 plugins {
     id("java")
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.9.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.1.0"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
-    kotlin("plugin.serialization") version "1.8.21"
+    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 group = "dev.nikomaru"
@@ -28,9 +28,8 @@ val mccoroutineVersion = "2.11.0"
 dependencies {
     compileOnly("io.papermc.paper", "paper-api", paperVersion)
 
-    library(kotlin("stdlib"))
-
     compileOnly("com.github.MilkBowl", "VaultAPI", vaultVersion)
+    compileOnly("com.comphenix.protocol","ProtocolLib","5.0.0")
 
     implementation("cloud.commandframework", "cloud-core", cloudVersion)
     implementation("cloud.commandframework", "cloud-kotlin-extensions", cloudVersion)
@@ -39,14 +38,13 @@ dependencies {
     implementation("cloud.commandframework", "cloud-kotlin-coroutines-annotations", cloudVersion)
     implementation("cloud.commandframework", "cloud-kotlin-coroutines", cloudVersion)
 
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.7.1")
-    implementation("com.github.shynixn.mccoroutine", "mccoroutine-bukkit-api", mccoroutineVersion)
-    implementation("com.github.shynixn.mccoroutine", "mccoroutine-bukkit-core", mccoroutineVersion)
-    implementation(kotlin("stdlib-jdk8"))
+    library("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.7.1")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.5.1")
 
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    library("com.github.shynixn.mccoroutine", "mccoroutine-bukkit-api", mccoroutineVersion)
+    library("com.github.shynixn.mccoroutine", "mccoroutine-bukkit-core", mccoroutineVersion)
 
-    compileOnly("com.comphenix.protocol","ProtocolLib","5.0.0")
+    library(kotlin("stdlib"))
 }
 
 java {
