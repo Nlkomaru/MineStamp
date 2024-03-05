@@ -1,6 +1,6 @@
-package dev.nikomaru.emojistamp.utils.coroutines
+package dev.nikomaru.minestamp.utils.coroutines
 
-import dev.nikomaru.emojistamp.EmojiStamp
+import dev.nikomaru.minestamp.MineStamp
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
 
@@ -14,7 +14,7 @@ object DispatcherContainer {
     val async: CoroutineContext
         get() {
             if (asyncCoroutine == null) {
-                asyncCoroutine = AsyncCoroutineDispatcher(JavaPlugin.getPlugin(EmojiStamp::class.java))
+                asyncCoroutine = AsyncCoroutineDispatcher(JavaPlugin.getPlugin(MineStamp::class.java))
             }
 
             return asyncCoroutine!!
@@ -26,7 +26,7 @@ object DispatcherContainer {
     val sync: CoroutineContext
         get() {
             if (syncCoroutine == null) {
-                syncCoroutine = MinecraftCoroutineDispatcher(JavaPlugin.getPlugin(EmojiStamp::class.java))
+                syncCoroutine = MinecraftCoroutineDispatcher(JavaPlugin.getPlugin(MineStamp::class.java))
             }
 
             return syncCoroutine!!

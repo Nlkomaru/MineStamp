@@ -1,0 +1,35 @@
+site_name: EmojiStamp Docs # TODO Change this to your site name
+theme:
+  name: material
+  language: ja
+  logo: null
+  favicon: https://github.com/RaceAssist/RaceAssist-web/blob/main/public/favicon.png?raw=true
+  icon:
+    repo: fontawesome/brands/git-alt
+  features:
+    - navigation.tabs
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary : blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary : blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+plugins:
+  - search:
+      lang: ja
+repo_url: https://github.com/Nlkomaru/EmojiStamp
+repo_name: EmojiStamp
+copyright: No Rights Reserved (CC0 1.0 Universal)  Written by Nikomaru in 2024
