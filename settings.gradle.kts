@@ -1,4 +1,4 @@
-rootProject.name = "EmojiStamp"
+rootProject.name = "MineStamp"
 
 pluginManagement {
     repositories {
