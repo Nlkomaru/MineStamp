@@ -99,7 +99,7 @@ tasks {
 
 
 bukkit {
-    name = "EmojiStamp"
+    name = "MineStamp"
     version = "1.0.0"
     website = "https://github.com/Nlkomaru/EmojiStamp"
     author = "Nikomaru"
