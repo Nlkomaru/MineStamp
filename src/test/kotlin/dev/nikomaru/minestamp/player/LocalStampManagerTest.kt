@@ -12,7 +12,7 @@ import org.koin.test.inject
 
 
 @ExtendWith(MineStampTest::class)
-class PlayerStampManagerTest : KoinTest{
+class LocalStampManagerTest : KoinTest{
     private val server : ServerMock by inject()
     private val plugin : MineStamp by inject()
     @Test
@@ -20,7 +20,7 @@ class PlayerStampManagerTest : KoinTest{
     fun testGetPlayerStamp() {
         println(plugin.dataFolder)
         val mockPlayer = server.addPlayer("testPlayer")
-        val playerStamp = PlayerStampManager.getPlayerStamp(mockPlayer)
+        val playerStamp = LocalPlayerStampManager().getPlayerStamp(mockPlayer)
         assertNotNull(playerStamp)
     }
 

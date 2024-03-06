@@ -1,7 +1,11 @@
 package dev.nikomaru.minestamp.stamp
 
 import dev.nikomaru.minestamp.MineStamp
+import dev.nikomaru.minestamp.data.FileType
+import dev.nikomaru.minestamp.data.LocalConfig
+import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
 import java.util.*
 
@@ -19,8 +23,14 @@ object StampManager: KoinComponent {
 
 
     private fun getImageStamp(shortCode: String): ImageStamp? {
-        val file = plugin.dataFolder.resolve("image").resolve(shortCode.removePrefix("!"))
-        if (!file.exists()) return null
+        if(get<LocalConfig>().type == FileType.LOCAL) {
+            val file = plugin.dataFolder.resolve("image").resolve(shortCode.removePrefix("!"))
+            if (!file.exists()) return null
+        }else{
+            val s3Client = dev.nikomaru.minestamp.utils.Utils.getS3Client()
+            val s3Config = get<LocalConfig>().s3Config!!
+            if(s3Client.doesObjectExist(s3Config.bucket, "image/${shortCode.removePrefix("!")}").not()) return null
+        }
         return ImageStamp(shortCode)
     }
 
@@ -34,8 +44,11 @@ object StampManager: KoinComponent {
         return EmojiStamp(shortCode)
     }
 
-    fun getRandomStamp(): AbstractStamp {
-
+    fun getRandomStamp(): AbstractStamp? {
+        val map = get<HashMap<String, Int>>().map { (k, v) -> org.apache.commons.math3.util.Pair(k,v.toDouble()) }.toMutableList()
+        val enumeratedDistribution = EnumeratedDistribution(map)
+        val randomShortCode = enumeratedDistribution.sample()
+        return getStamp(randomShortCode)
     }
 
 }

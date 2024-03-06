@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import dev.nikomaru.minestamp.MineStamp
 import dev.nikomaru.minestamp.stamp.AbstractStamp
 import dev.nikomaru.minestamp.stamp.EmojiStamp
+import dev.nikomaru.minestamp.stamp.StampManager
 import dev.nikomaru.minestamp.utils.Utils.mm
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -16,10 +17,10 @@ import org.koin.core.component.inject
 object TicketUtils: KoinComponent {
     val plugin: MineStamp by inject()
 
-    fun getRandomTicket(jwt: String): ItemStack {
+    fun getRouletteTicket(jwt: String): ItemStack {
         val ticket = ItemStack(Material.PAPER)
         val meta = ticket.itemMeta
-        meta.displayName(mm.deserialize("<rainbow>ランダムチケット"))
+        meta.displayName(mm.deserialize("<rainbow>ルーレットチケット"))
         meta.lore(listOf(mm.deserialize("<green>右クリックを押して、スタンプチケットを生成")))
         val namespaceKey = NamespacedKey(plugin, "ticket")
         meta.persistentDataContainer.set(namespaceKey, PersistentDataType.STRING, jwt)
@@ -57,5 +58,10 @@ object TicketUtils: KoinComponent {
         meta.persistentDataContainer.set(namespaceKey, PersistentDataType.STRING, jwt)
         ticket.itemMeta = meta
         return ticket
+    }
+
+    fun getRandomTicket(algorithm: Algorithm): ItemStack? {
+        val randomStamp = StampManager.getRandomStamp() ?: return null
+        return getUniqueTicket(algorithm, randomStamp)
     }
 }

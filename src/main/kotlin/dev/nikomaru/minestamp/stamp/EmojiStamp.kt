@@ -9,7 +9,7 @@ class EmojiStamp(shortCode: String): AbstractStamp(shortCode), KoinComponent {
     private val emojiProperties: Properties by inject()
     var char: String
 
-    init { //1F932 1F3FC
+    init {
         val original = emojiProperties.getProperty(shortCode)
         val unicodePoints = original.split(" ")
         val chars = unicodePoints.flatMap { Character.toChars(Integer.parseInt(it, 16)).toList() }.toCharArray()

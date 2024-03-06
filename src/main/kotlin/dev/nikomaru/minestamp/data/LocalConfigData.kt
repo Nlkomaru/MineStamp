@@ -1,0 +1,17 @@
+package dev.nikomaru.minestamp.data
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LocalConfig(
+    val type: FileType = FileType.LOCAL, val s3Config: S3Config? = null
+)
+
+@Serializable
+data class S3Config(
+    val url: String,val bucket: String, val accessKey: String, val secretKey: String
+)
+
+enum class FileType {
+    LOCAL, S3
+}

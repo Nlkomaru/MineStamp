@@ -1,17 +1,10 @@
-# Welcome to MkDocs
+# はじめに
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## EmojiStampとは
+Minecraftにおいて、プレイヤーがコマンドを使用することでその頭上に絵文字を表示することができるプラグインです。
+また、絵文字はサーバー管理者がアップロードした画像を使用することができます。
 
-## Commands
+## 絵文字について
+絵文字については、Noto Emoji colorを使用しています。<br>
+このフォントについては、[githubレポジトリ](https://github.com/googlefonts/noto-emoji)より引っ張ってきており、Apache License 2.0のもとで利用しています。
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
