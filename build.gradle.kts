@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    val paperVersion = "1.20.2-R0.1-SNAPSHOT"
+    val paperVersion = "1.20.4-R0.1-SNAPSHOT"
     val mccoroutineVersion = "2.14.0"
     val lampVersion = "3.1.8"
     val koinVersion = "3.5.2"
@@ -38,8 +38,6 @@ dependencies {
 
     library(kotlin("stdlib"))
     compileOnly("io.papermc.paper:paper-api:$paperVersion")
-
-
     implementation("com.github.Revxrsal.Lamp:common:$lampVersion")
     implementation("com.github.Revxrsal.Lamp:bukkit:$lampVersion")
 
@@ -101,10 +99,10 @@ tasks {
 bukkit {
     name = "MineStamp"
     version = "1.0.0"
-    website = "https://github.com/Nlkomaru/EmojiStamp"
+    website = "https://github.com/Nlkomaru/MineStamp"
     author = "Nikomaru"
     main = "dev.nikomaru.minestamp.MineStamp"
     apiVersion = "1.20"
     depend = listOf("ProtocolLib")
-    description = "An EmojiStamp"
+    description = "A Stamp plugin for Minecraft"
 }

@@ -18,7 +18,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission
 import java.security.KeyPairGenerator
 
 
-@Command("stamp", "minestamp")
+@Command("minestamp")
 @CommandPermission("minestamp.command.publish")
 class PublishTicketCommand: KoinComponent {
     val plugin: MineStamp by inject()
@@ -51,7 +51,7 @@ class PublishTicketCommand: KoinComponent {
     fun publishRandom(actor: Player) {
         val rsaKey = getRSAKeyPair() ?: run {
             actor.sendRichMessage("<red>秘密鍵と公開鍵が見つかりませんでした")
-            actor.sendRichMessage("<red>/stamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
+            actor.sendRichMessage("<red>/minestamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
             return
         }
         val algorithm = Algorithm.RSA256(rsaKey.second, rsaKey.first)
@@ -66,7 +66,7 @@ class PublishTicketCommand: KoinComponent {
     fun publishUnique(actor: Player, stamp: AbstractStamp) {
         val rsaKey = getRSAKeyPair() ?: run {
             actor.sendRichMessage("<red>秘密鍵と公開鍵が見つかりませんでした")
-            actor.sendRichMessage("<red>/stamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
+            actor.sendRichMessage("<red>/minestamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
             return
         }
         val algorithm = Algorithm.RSA256(rsaKey.second, rsaKey.first)

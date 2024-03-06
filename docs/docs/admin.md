@@ -7,6 +7,24 @@
 その後、複数サーバーの場合にはこれをコピーします。
 また複数サーバーの場合、各サーバーのconfig.jsonにてS3の設定を行います。
 
+## 管理用コマンド一覧
+command: `/minestamp advance <abstract stamp> [time] [size] [particle size] [accuracy]`<br>
+demo: `/minestamp advance :cucumber: 1 3 1.5 32`<br>
+description: より高度なスタンプを生成します<br>
+
+command: `/minestamp generate keypair`<br>
+description: 秘密鍵と公開鍵を生成します<br>
+
+command: `/minestamp publish roulette`<br>
+description: ルーレット用のチケットを生成します<br>
+
+command: `/minestamp publish unique <stamp>`<br>
+demo: `/minestamp publish unique :cucumber:`<br>
+description: 特定のスタンプを有効化するためのチケットを生成します<br>
+
+command: `/minestamp reload`<br>
+description: 設定を再読み込みします また、画像等を追加した場合もこのコマンドを実行することで反映されます<br>
+
 ## コンフィグ一覧
 
 ### config.json

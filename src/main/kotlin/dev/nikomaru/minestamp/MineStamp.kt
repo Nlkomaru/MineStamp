@@ -1,8 +1,9 @@
 package dev.nikomaru.minestamp
 
-import com.amazonaws.services.s3.model.PutObjectRequest
 import dev.nikomaru.minestamp.command.ColorEmojiCommand
+import dev.nikomaru.minestamp.command.PlayerUtilCommand
 import dev.nikomaru.minestamp.command.PublishTicketCommand
+import dev.nikomaru.minestamp.command.ReloadCommand
 import dev.nikomaru.minestamp.data.FileType
 import dev.nikomaru.minestamp.data.LocalConfig
 import dev.nikomaru.minestamp.files.Config
@@ -50,9 +51,7 @@ open class MineStamp: JavaPlugin(), KoinComponent {
             }
         })
 
-
         Config.loadConfig()
-        makeFolder()
         val stampManager: AbstractPlayerStampManager =
             if (get<LocalConfig>().type == FileType.S3) {
                 S3PlayerStampManager()
@@ -70,39 +69,9 @@ open class MineStamp: JavaPlugin(), KoinComponent {
     override fun onDisable() { // Plugin shutdown logic
     }
 
-    private fun makeFolder() {
-        if (!plugin.dataFolder.exists()) {
-            plugin.dataFolder.mkdir()
-        }
-        if (!plugin.dataFolder.resolve("image").exists()) {
-            plugin.dataFolder.resolve("image").mkdir()
-            val file = plugin.dataFolder.resolve("image").resolve("test.jpg")
-            val inputStream = plugin.javaClass.classLoader.getResourceAsStream("test.jpg")
-            if (inputStream != null) {
-                file.writeBytes(inputStream.readAllBytes())
-            }
-        }
-        if (get<LocalConfig>().type == FileType.S3) {
-            val s3Client = dev.nikomaru.minestamp.utils.Utils.getS3Client()
-            val s3Config = get<LocalConfig>().s3Config!!
-            if (s3Client.doesBucketExistV2(s3Config.bucket).not()) {
-                s3Client.createBucket(s3Config.bucket)
-            }
-            s3Client.putObject(s3Config.bucket, "image/", "")
-            val inputStream = plugin.javaClass.classLoader.getResourceAsStream("test.jpg")
-            if (inputStream != null) {
-                val req = PutObjectRequest(s3Config.bucket, "image/test.jpg", inputStream, null)
-                req.requestClientOptions.readLimit = 1024 * 1024 * 10
-                s3Client.putObject(req)
-            } else {
-                throw IllegalStateException("test.jpg is not found")
-            }
 
-        }
 
-    }
-
-    fun setKoin() {
+    private fun setKoin() {
         val appModule = module {
             single<MineStamp> { this@MineStamp }
         }
@@ -142,6 +111,8 @@ open class MineStamp: JavaPlugin(), KoinComponent {
         with(commandHandle) {
             register(ColorEmojiCommand())
             register(PublishTicketCommand())
+            register(ReloadCommand())
+            register(PlayerUtilCommand())
         }
 
     }

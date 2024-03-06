@@ -90,6 +90,8 @@ class S3PlayerStampManager: AbstractPlayerStampManager(), KoinComponent {
     }
 
     override fun hasStamp(player: Player, stamp: AbstractStamp): Boolean {
-        return playerEmoji[player.uniqueId]?.map{it.shortCode}?.contains(stamp.shortCode) ?: false
+        val default = get<PlayerDefaultEmojiConfigData>().defaultEmoji
+        val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()
+        return (playerStamp + default).map{it.shortCode}.contains(stamp.shortCode)
     }
 }

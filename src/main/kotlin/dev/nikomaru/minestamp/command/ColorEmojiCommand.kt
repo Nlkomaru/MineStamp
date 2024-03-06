@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.wrappers.WrappedParticle
 import dev.nikomaru.minestamp.data.PlayerDefaultEmojiConfigData
+import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
 import dev.nikomaru.minestamp.stamp.AbstractStamp
 import kotlinx.coroutines.delay
 import org.bukkit.Color
@@ -18,8 +19,8 @@ import revxrsal.commands.bukkit.annotation.CommandPermission
 import kotlin.math.cos
 import kotlin.math.sin
 
-@Command("stamp", "minestamp")
-class ColorEmojiCommand : KoinComponent {
+@Command("minestamp")
+class ColorEmojiCommand: KoinComponent {
     @Subcommand("advance")
     @Description("advanced command")
     @CommandPermission("minestamp.command.advance")
@@ -38,12 +39,17 @@ class ColorEmojiCommand : KoinComponent {
         summonEmoji(sender, abstractStamp, config)
     }
 
-    @Subcommand("stamp")
+    @Command("stamp", "st", "minestamp stamp")
     suspend fun summonEmoji(
         sender: CommandSender, abstractStamp: AbstractStamp
     ) {
         if (sender !is Player) {
             sender.sendPlainMessage("プレイヤーから実行してください")
+            return
+        }
+        val playerStampManager = get<AbstractPlayerStampManager>()
+        if (!playerStampManager.hasStamp(sender, abstractStamp)) {
+            sender.sendPlainMessage("その絵文字を持っていません")
             return
         }
         val config = get<PlayerDefaultEmojiConfigData>()

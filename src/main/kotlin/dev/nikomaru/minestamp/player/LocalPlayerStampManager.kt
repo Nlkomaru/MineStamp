@@ -63,6 +63,8 @@ class LocalPlayerStampManager: AbstractPlayerStampManager(),  KoinComponent {
     }
 
     override fun hasStamp(player: Player, stamp: AbstractStamp): Boolean {
-        return playerEmoji[player.uniqueId]?.contains(stamp) ?: false
+        val default = get<PlayerDefaultEmojiConfigData>().defaultEmoji
+        val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()
+        return (playerStamp + default).map{it.shortCode}.contains(stamp.shortCode)
     }
 }
