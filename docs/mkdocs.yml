@@ -1,4 +1,4 @@
-site_name: MineStamp Docs # TODO Change this to your site name
+site_name: MineStamp Docs
 theme:
   name: material
   language: ja
@@ -29,6 +29,6 @@ markdown_extensions:
 plugins:
   - search:
       lang: ja
-repo_url: https://github.com/Nlkomaru/EmojiStamp # TODO Change this to your site name
-repo_name: MineStamp # TODO Change this to your site name
-copyright: No Rights Reserved(CC00).  Written by Nikomaru in 2024 # TODO Change this to your site name
+repo_url: https://github.com/Nlkomaru/MineStamp
+repo_name: MineStamp
+copyright: No Rights Reserved(CC0).  Written by Nikomaru in 2024
