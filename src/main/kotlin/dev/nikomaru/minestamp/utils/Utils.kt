@@ -18,6 +18,7 @@ object Utils: KoinComponent {
         prettyPrint = true
         isLenient = true
         encodeDefaults = true
+        ignoreUnknownKeys = true
     }
     val mm = MiniMessage.miniMessage()
 
