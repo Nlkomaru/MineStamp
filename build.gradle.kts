@@ -32,7 +32,7 @@ dependencies {
     val serializationVersion = "1.6.2"
     val protocolLibVersion = "5.2.0-SNAPSHOT"
     val jwtVersion = "4.4.0"
-    val junitVersion = "5.10.1"
+    val junitVersion = "5.10.2"
     val mockkVersion = "1.13.8"
     val mockBukkitVersion = "3.74.0"
 
