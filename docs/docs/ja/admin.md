@@ -5,7 +5,7 @@
 `/stamp generate keyPair` を実行します。
 
 その後、複数サーバーの場合にはこれをコピーします。
-また複数サーバーの場合、各サーバーのconfig.jsonにてS3の設定を行います。
+また複数サーバーの場合S3を使用するため、各サーバーのconfig.jsonにてS3の設定を行います。
 
 ## 管理用コマンド一覧
 command: `/minestamp advance <abstract stamp> [time] [size] [particle size] [accuracy]`<br>

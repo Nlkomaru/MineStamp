@@ -12,5 +12,6 @@ data class PlayerDefaultEmojiConfigData(
     val accuracy: Int = 32,
     val defaultEmoji: List<@Serializable(with = AbstractStampSerializer::class) AbstractStamp> = arrayListOf(
         ":cucumber:", ":thinking-face:", ":angry-face:", ":sleeping-face:"
-    ).mapNotNull { StampManager.getStamp(it) }
+    ).mapNotNull { StampManager.getStamp(it) },
+    val waitSecond : Double = 5.0
 )
