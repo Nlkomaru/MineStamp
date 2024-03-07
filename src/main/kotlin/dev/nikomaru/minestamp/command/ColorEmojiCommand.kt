@@ -16,11 +16,14 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import revxrsal.commands.annotation.*
 import revxrsal.commands.bukkit.annotation.CommandPermission
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Command("minestamp")
 class ColorEmojiCommand: KoinComponent {
+    val rejectSummon = hashMapOf<UUID, Boolean>()
+
     @Subcommand("advance")
     @Description("advanced command")
     @CommandPermission("minestamp.command.advance")
@@ -59,6 +62,11 @@ class ColorEmojiCommand: KoinComponent {
     private suspend fun summonEmoji(
         sender: Player, abstractStamp: AbstractStamp, config: PlayerDefaultEmojiConfigData
     ) {
+        if (rejectSummon[sender.uniqueId] == true) {
+            sender.sendPlainMessage("スタンプを連続で召喚することはできません")
+            return
+        }
+
         val image = abstractStamp.getStamp()
         val time = config.second
         val size = config.size
@@ -95,6 +103,10 @@ class ColorEmojiCommand: KoinComponent {
             }
             delay(1000L / count)
         }
+        rejectSummon[sender.uniqueId] = true
+        delay(1000L * time)
+        rejectSummon[sender.uniqueId] = false
+
     }
 
     private fun getCorner(list: ArrayList<Pair<Pair<Int, Int>, Int>>): List<Int>? = with(list) {
