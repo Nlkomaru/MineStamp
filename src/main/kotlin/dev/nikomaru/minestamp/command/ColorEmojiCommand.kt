@@ -62,10 +62,12 @@ class ColorEmojiCommand: KoinComponent {
     private suspend fun summonEmoji(
         sender: Player, abstractStamp: AbstractStamp, config: PlayerDefaultEmojiConfigData
     ) {
+        val waitSecond = 5
         if (rejectSummon[sender.uniqueId] == true) {
-            sender.sendPlainMessage("スタンプを連続で召喚することはできません")
+            sender.sendPlainMessage("スタンプを連続で召喚することはできません 前の絵文字の出現から${waitSecond}秒待つ必要があります")
             return
         }
+        rejectSummon[sender.uniqueId] = true
 
         val image = abstractStamp.getStamp()
         val time = config.second
@@ -93,6 +95,7 @@ class ColorEmojiCommand: KoinComponent {
         val pm = ProtocolLibrary.getProtocolManager()
         val count = 8
 
+
         repeat(count * time) {
             list.parallelStream().forEach {
                 val position = it.first
@@ -103,9 +106,9 @@ class ColorEmojiCommand: KoinComponent {
             }
             delay(1000L / count)
         }
-        rejectSummon[sender.uniqueId] = true
-        delay(1000L * time)
-        rejectSummon[sender.uniqueId] = false
+
+        delay(1000L * waitSecond)
+        rejectSummon.remove(sender.uniqueId)
 
     }
 
