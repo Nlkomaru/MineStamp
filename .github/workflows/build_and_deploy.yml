@@ -51,22 +51,3 @@ jobs:
           game-version-filter: releases
           java: |
             17
-
-      - name: Create a GitHub release
-        id: create_release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/libs/MineStamp-1.0-SNAPSHOT-all.jar # change name of artifact
-          asset_name: MineStamp_${{ steps.tag_version.outputs.new_tag }}.jar # change name of artifact
-          asset_content_type: application/jar
