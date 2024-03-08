@@ -23,7 +23,7 @@ import kotlin.math.sin
 
 @Command("minestamp")
 class ColorEmojiCommand: KoinComponent {
-    val rejectSummon = hashMapOf<UUID, Boolean>()
+    private val rejectSummon = hashMapOf<UUID, Boolean>()
 
     @Subcommand("advance")
     @Description("advanced command")
