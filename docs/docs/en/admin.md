@@ -4,7 +4,7 @@
 Generate public and private keys on the server<br>
 To run `/stamp generate keyPair`<br>
 
-This is then copied in the case of multiple servers.
+If there is more than one server, this should be copied. <br>
 In addition, S3 is used for multiple servers, so configure S3 settings in config.json on each server.
 
 ## List of administrative commands
@@ -26,11 +26,13 @@ command: `/minestamp reload`<br>
 description: Reloads the settings. Also, if images etc. are added, they will be reflected by executing this command.<br>
 
 ## Add language settings
-Add a file with the language code in the lang directory. The file name is the language code. The file format is properties.
-example:`zh_CN.properties`, `fr_FR.properties`
-defaultSupportedLanguage: `en_US`, `ja_JP`
-if you want to add a new language, please create a file with the language code in the lang directory.
-original file is [here] (https://github.com/Nlkomaru/MineStamp/blob/master/src/main/resources/lang/en_US.properties)
+
+Add a file with the language code in the lang directory. The file name is the language code. The file format is
+properties. <br>
+example:`zh_CN.properties`, `fr_FR.properties` <br>
+defaultSupportedLanguage: `en_US`, `ja_JP` <br>
+if you want to add a new language, please create a file with the language code in the lang directory. <br>
+original file is [here](https://github.com/Nlkomaru/MineStamp/blob/master/src/main/resources/lang/en_US.properties) <br>
 
 
 ## Configuration file and directory structure
