@@ -25,6 +25,14 @@ description: Generate a ticket to activate a specific stamp<br>
 command: `/minestamp reload`<br>
 description: Reloads the settings. Also, if images etc. are added, they will be reflected by executing this command.<br>
 
+## Add language settings
+Add a file with the language code in the lang directory. The file name is the language code. The file format is properties.
+example:`zh_CN.properties`, `fr_FR.properties`
+defaultSupportedLanguage: `en_US`, `ja_JP`
+if you want to add a new language, please create a file with the language code in the lang directory.
+original file is [here] (https://github.com/Nlkomaru/MineStamp/blob/master/src/main/resources/lang/en_US.properties)
+
+
 ## Configuration file and directory structure
 
 ### config.json
@@ -38,7 +46,8 @@ Basic configuration. This will always be placed on each server.
     "bucket" : "test",
     "accessKey" : "minio",
     "secretKey" : "minio123"
-  }
+  },
+  "lang" : "en_US"
 }
 ```
 ### random.json
@@ -75,6 +84,9 @@ This is the setting when using roulette tickets. Set the shortCode and the corre
 ## For single server
 ```
 └── EmojiStamp/
+    ├── lang/
+    │   ├── zh_CN.properties
+    │   └── fr_FR.properties
     ├── image/
     │   ├── picture-1.png
     │   └── picture-2.jpg
@@ -94,6 +106,9 @@ This is a multi-server configuration.
 Directory structure on the local server side
 ```
 └── EmojiStamp/
+    ├── lang/
+    │   ├── zh_CN.properties
+    │   └── fr_FR.properties
     ├── config.json
     ├── privateKey
     └── publicKey

@@ -7,6 +7,7 @@ import dev.nikomaru.minestamp.data.FileType
 import dev.nikomaru.minestamp.data.ImageListData
 import dev.nikomaru.minestamp.data.LocalConfig
 import dev.nikomaru.minestamp.data.PlayerDefaultEmojiConfigData
+import dev.nikomaru.minestamp.utils.LangUtils
 import dev.nikomaru.minestamp.utils.Utils.getS3Client
 import dev.nikomaru.minestamp.utils.Utils.json
 import kotlinx.serialization.encodeToString
@@ -31,6 +32,7 @@ object Config: KoinComponent {
         loadKoinModules(module {
             single { localConfig }
         })
+        LangUtils.loadLocale()
         if (localConfig.type == FileType.LOCAL) {
             plugin.logger.info("File type is local.")
             loadConfigForSingle()

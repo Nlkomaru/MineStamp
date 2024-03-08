@@ -7,6 +7,7 @@ import com.comphenix.protocol.wrappers.WrappedParticle
 import dev.nikomaru.minestamp.data.PlayerDefaultEmojiConfigData
 import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
 import dev.nikomaru.minestamp.stamp.AbstractStamp
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import kotlinx.coroutines.delay
 import org.bukkit.Color
 import org.bukkit.Particle
@@ -35,7 +36,7 @@ class ColorEmojiCommand: KoinComponent {
         @Range(min = 1.0, max = 128.0) @Default("32") accuracy: Int,
     ) {
         if (sender !is Player) {
-            sender.sendPlainMessage("プレイヤーから実行してください")
+            sender.sendI18nRichMessage("only-execute-from-player")
             return
         }
         val config = PlayerDefaultEmojiConfigData(time, size, particleSize, accuracy)
@@ -47,12 +48,12 @@ class ColorEmojiCommand: KoinComponent {
         sender: CommandSender, abstractStamp: AbstractStamp
     ) {
         if (sender !is Player) {
-            sender.sendPlainMessage("プレイヤーから実行してください")
+            sender.sendI18nRichMessage("only-execute-from-player")
             return
         }
         val playerStampManager = get<AbstractPlayerStampManager>()
-        if (!playerStampManager.hasStamp(sender, abstractStamp)) {
-            sender.sendPlainMessage("その絵文字を持っていません")
+        if (!playerStampManager.availableStamp(sender, abstractStamp)) {
+            sender.sendI18nRichMessage("not-have-the-emoji")
             return
         }
         val config = get<PlayerDefaultEmojiConfigData>()
@@ -64,7 +65,7 @@ class ColorEmojiCommand: KoinComponent {
     ) {
         val waitSecond = config.waitSecond
         if (rejectSummon[sender.uniqueId] == true) {
-            sender.sendPlainMessage("スタンプを連続で召喚することはできません 前の絵文字の出現から${waitSecond}秒待つ必要があります")
+            sender.sendI18nRichMessage("cannot-summon-in-a-row", waitSecond)
             return
         }
         rejectSummon[sender.uniqueId] = true

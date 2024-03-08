@@ -1,6 +1,7 @@
 package dev.nikomaru.minestamp.command
 
 import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
@@ -14,7 +15,7 @@ import revxrsal.commands.help.CommandHelp
 class PlayerUtilCommand: KoinComponent {
     @Subcommand("help")
     fun help(actor: CommandSender) { //クリックしたらurlに飛ぶ
-        actor.sendRichMessage("<green><click:open_url:'https://nlkomaru.github.io/MineStamp/player/'>クリックしてヘルプを確認</click>")
+        actor.sendI18nRichMessage("help-url")
     }
 
     @Subcommand("commands")
@@ -25,7 +26,7 @@ class PlayerUtilCommand: KoinComponent {
 
     @Subcommand("list")
     fun showEmojiList(actor: Player , @Default("4") resetCount: Int) {
-        actor.sendRichMessage("<green>現在の絵文字リスト")
+        actor.sendI18nRichMessage("current-emoji-list")
         val playerStampManager: AbstractPlayerStampManager = get<AbstractPlayerStampManager>()
         val list = playerStampManager.getPlayerStamp(actor)
         list.sortBy { it.shortCode }

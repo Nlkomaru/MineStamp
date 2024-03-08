@@ -7,6 +7,7 @@ import dev.nikomaru.minestamp.stamp.AbstractStamp
 import dev.nikomaru.minestamp.utils.RSAUtils.getRSAKeyPair
 import dev.nikomaru.minestamp.utils.TicketUtils.getRouletteTicket
 import dev.nikomaru.minestamp.utils.TicketUtils.getUniqueTicket
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
@@ -24,15 +25,15 @@ class PublishTicketCommand: KoinComponent {
     val plugin: MineStamp by inject()
 
     @Subcommand("generate keyPair")
-    @Description("秘密鍵と公開鍵を生成します")
+    @Description("Generate private and public keys.")
     @CommandPermission("minestamp.command.publish.generate")
     fun generateKeyPairs(actor: CommandSender) {
         val privateKeyFile = plugin.dataFolder.resolve("privateKey")
         val publicKeyFile = plugin.dataFolder.resolve("publicKey")
 
         if (privateKeyFile.exists() || publicKeyFile.exists()) {
-            actor.sendRichMessage("<red>秘密鍵と公開鍵が既に存在します")
-            actor.sendRichMessage("<red>削除してから再度実行してください")
+            actor.sendI18nRichMessage("already-exist-keyPair")
+            actor.sendI18nRichMessage("execute-after-remove")
             return
         }
         val keyGenerator = KeyPairGenerator.getInstance("RSA")
@@ -42,16 +43,16 @@ class PublishTicketCommand: KoinComponent {
         privateKeyFile.writeBytes(privateKey.encoded)
         val publicKey = keyPair.public
         publicKeyFile.writeBytes(publicKey.encoded)
-        actor.sendRichMessage("秘密鍵と公開鍵を生成しました")
+        actor.sendI18nRichMessage("generate-keyPair")
     }
 
     @Subcommand("publish roulette")
-    @Description("ルーレット用のチケットを生成します")
+    @Description("Generate tickets for roulette.")
     @CommandPermission("minestamp.command.publish.roulette")
     fun publishRandom(actor: Player) {
         val rsaKey = getRSAKeyPair() ?: run {
-            actor.sendRichMessage("<red>秘密鍵と公開鍵が見つかりませんでした")
-            actor.sendRichMessage("<red>/minestamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
+            actor.sendI18nRichMessage("not-found-keyPair")
+            actor.sendI18nRichMessage("need-generate-keyPair")
             return
         }
         val algorithm = Algorithm.RSA256(rsaKey.second, rsaKey.first)
@@ -61,12 +62,12 @@ class PublishTicketCommand: KoinComponent {
     }
 
     @Subcommand("publish unique")
-    @Description("ユニークなチケットを生成します")
+    @Description("Generate unique tickets.")
     @CommandPermission("minestamp.command.publish.unique")
     fun publishUnique(actor: Player, stamp: AbstractStamp) {
         val rsaKey = getRSAKeyPair() ?: run {
-            actor.sendRichMessage("<red>秘密鍵と公開鍵が見つかりませんでした")
-            actor.sendRichMessage("<red>/minestamp generate keyPair</red>で秘密鍵と公開鍵を生成してください")
+            actor.sendI18nRichMessage("not-found-keyPair")
+            actor.sendI18nRichMessage("need-generate-keyPair")
             return
         }
         val algorithm = Algorithm.RSA256(rsaKey.second, rsaKey.first)

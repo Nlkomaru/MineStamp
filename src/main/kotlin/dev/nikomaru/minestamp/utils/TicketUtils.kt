@@ -6,6 +6,7 @@ import dev.nikomaru.minestamp.MineStamp
 import dev.nikomaru.minestamp.stamp.AbstractStamp
 import dev.nikomaru.minestamp.stamp.EmojiStamp
 import dev.nikomaru.minestamp.stamp.StampManager
+import dev.nikomaru.minestamp.utils.LangUtils.getI18nMessage
 import dev.nikomaru.minestamp.utils.Utils.mm
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -20,38 +21,36 @@ object TicketUtils: KoinComponent {
     fun getRouletteTicket(jwt: String): ItemStack {
         val ticket = ItemStack(Material.PAPER)
         val meta = ticket.itemMeta
-        meta.displayName(mm.deserialize("<rainbow>ルーレットチケット"))
-        meta.lore(listOf(mm.deserialize("<green>右クリックを押して、スタンプチケットを生成")))
+        meta.displayName(mm.deserialize(getI18nMessage("roulette-ticket")))
+        meta.lore(listOf(mm.deserialize(getI18nMessage("generate-ticket-by-right-click"))))
         val namespaceKey = NamespacedKey(plugin, "ticket")
         meta.persistentDataContainer.set(namespaceKey, PersistentDataType.STRING, jwt)
         ticket.itemMeta = meta
         return ticket
     }
 
-    fun getUniqueTicket(algorithm : Algorithm, stamp: AbstractStamp): ItemStack {
+    fun getUniqueTicket(algorithm: Algorithm, stamp: AbstractStamp): ItemStack {
         val ticket = ItemStack(Material.PAPER)
-        val jwt = JWT.create().withIssuer("minestamp")
-            .withClaim("type", "unique")
-            .withClaim("shortCode", stamp.shortCode)
-            .sign(algorithm)
-
+        val jwt =
+            JWT.create().withIssuer("minestamp").withClaim("type", "unique").withClaim("shortCode", stamp.shortCode)
+                .sign(algorithm)
         val meta = ticket.itemMeta
         lateinit var type: String
         lateinit var preview: String
         if (stamp is EmojiStamp) {
-            type = "絵文字"
+            type = getI18nMessage("type-emoji")
             preview = stamp.char
         } else {
-            type = "画像"
+            type = getI18nMessage("type-image")
             preview = ""
         }
 
-        meta.displayName(mm.deserialize("絵文字チケット $preview"))
+        meta.displayName(mm.deserialize(getI18nMessage("emoji-ticket", preview)))
         meta.lore(
             listOf(
-                mm.deserialize("<green>右クリックを押して、スタンプを取得"),
-                mm.deserialize("<gray>タイプ: $type"),
-                mm.deserialize("<gray>スタンプ: ${stamp.shortCode}")
+                mm.deserialize(getI18nMessage("get-stamp-by-right-click")),
+                mm.deserialize(getI18nMessage("stamp-type", type)),
+                mm.deserialize(getI18nMessage("stamp-shortcode", stamp.shortCode))
             )
         )
         val namespaceKey = NamespacedKey(plugin, "ticket")
