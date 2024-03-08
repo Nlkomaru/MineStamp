@@ -12,5 +12,5 @@ abstract class AbstractPlayerStampManager {
     abstract fun getPlayerStamp(player: Player): ArrayList<AbstractStamp>
     abstract fun addStamp(player: Player, stamp: AbstractStamp)
     abstract fun removeStamp(player: Player, stamp: AbstractStamp)
-    abstract fun hasStamp(player: Player, stamp: AbstractStamp): Boolean
+    abstract fun availableStamp(player: Player, stamp: AbstractStamp): Boolean
 }

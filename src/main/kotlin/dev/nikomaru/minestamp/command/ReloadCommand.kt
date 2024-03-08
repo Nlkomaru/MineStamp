@@ -1,6 +1,7 @@
 package dev.nikomaru.minestamp.command
 
 import dev.nikomaru.minestamp.files.Config
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import org.bukkit.command.CommandSender
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Subcommand
@@ -12,6 +13,6 @@ class ReloadCommand {
     @CommandPermission("minestamp.command.reload")
     fun reload(sender : CommandSender) {
         Config.loadConfig()
-        sender.sendRichMessage("<green>コンフィグをリロードしました")
+        sender.sendI18nRichMessage("reloaded-config")
     }
 }

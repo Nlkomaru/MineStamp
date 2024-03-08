@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LocalConfig(
-    val type: FileType = FileType.LOCAL, val s3Config: S3Config? = null
+    val type: FileType = FileType.LOCAL, val s3Config: S3Config? = null, val lang : String = "en_US"
 )
 
 @Serializable

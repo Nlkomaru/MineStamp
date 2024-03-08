@@ -7,6 +7,7 @@ import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
 import dev.nikomaru.minestamp.stamp.StampManager
 import dev.nikomaru.minestamp.utils.RSAUtils
 import dev.nikomaru.minestamp.utils.TicketUtils
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.event.EventHandler
@@ -49,12 +50,12 @@ class TicketInteractEvent: Listener, KoinComponent {
                 item.amount -= 1
                 event.hand?.let { player.inventory.setItem(it, item) }
                 val rsaKey = RSAUtils.getRSAKeyPair() ?: run {
-                    player.sendRichMessage("<red>秘密鍵と公開鍵が見つかりませんでした このことをサーバー管理者に報告してください")
+                    player.sendI18nRichMessage("not-found-keypair-need-report-admin")
                     return
                 }
                 val algorithm = Algorithm.RSA256(rsaKey.second, rsaKey.first)
                 val randomTicket = TicketUtils.getRandomTicket(algorithm) ?: run {
-                    player.sendRichMessage("<red>スタンプが見つかりませんでした このことをサーバー管理者に報告してください")
+                    player.sendI18nRichMessage("not-found-stamp-need-report-admin")
                     return
                 }
                 player.inventory.addItem(randomTicket)
@@ -63,17 +64,17 @@ class TicketInteractEvent: Listener, KoinComponent {
                 val playerStampManager = get<AbstractPlayerStampManager>()
                 val shortCode = JWT.decode(jwt).claims["shortCode"]?.asString() ?: return
                 val stamp = StampManager.getStamp(shortCode) ?: return
-                if(playerStampManager.hasStamp(player, stamp)) {
-                    player.sendMessage("既に持っています")
+                if(playerStampManager.availableStamp(player, stamp)) {
+                    player.sendI18nRichMessage("already-haven")
                     return
                 }
                 item.amount -= 1
                 event.hand?.let { player.inventory.setItem(it, item) }
                 playerStampManager.addStamp(player, stamp)
-                player.sendMessage("スタンプ (${stamp.shortCode})が有効になりました")
+                player.sendI18nRichMessage("available-stamp", stamp.shortCode)
             }
             else -> {
-                player.sendMessage("不明なチケットです")
+                player.sendI18nRichMessage("invalid-ticket")
             }
         }
         rejectInteract[player.uniqueId] = true
