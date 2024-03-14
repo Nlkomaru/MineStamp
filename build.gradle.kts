@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-
 plugins {
     id("java")
     kotlin("jvm") version "1.9.0"
@@ -25,16 +23,13 @@ repositories {
 
 dependencies {
     val paperVersion = "1.20.4-R0.1-SNAPSHOT"
-    val mccoroutineVersion = "2.14.0"
+    val mccoroutineVersion = "2.15.0"
     val lampVersion = "3.1.8"
     val koinVersion = "3.5.2"
     val coroutineVersion = "1.7.3"
     val serializationVersion = "1.6.2"
     val protocolLibVersion = "5.2.0-SNAPSHOT"
     val jwtVersion = "4.4.0"
-    val junitVersion = "5.10.1"
-    val mockkVersion = "1.13.8"
-    val mockBukkitVersion = "3.74.0"
 
     library(kotlin("stdlib"))
     compileOnly("io.papermc.paper:paper-api:$paperVersion")
@@ -51,17 +46,6 @@ dependencies {
     library("org.apache.commons:commons-math3:3.6.1")
     compileOnly("com.comphenix.protocol:ProtocolLib:$protocolLibVersion")
     library("com.auth0:java-jwt:$jwtVersion")
-
-
-    testImplementation("org.apache.commons:commons-math3:3.6.1")
-    testImplementation("com.comphenix.protocol:ProtocolLib:$protocolLibVersion")
-    testImplementation(("com.auth0:java-jwt:$jwtVersion"))
-
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:$mockBukkitVersion")
-    testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-    testImplementation("io.insert-koin:koin-test:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 }
 
 java {
@@ -85,14 +69,6 @@ tasks {
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
     }
-    test {
-        useJUnitPlatform()
-        testLogging {
-            showStandardStreams = true
-            events("passed", "skipped", "failed")
-            exceptionFormat = TestExceptionFormat.FULL
-        }
-    }
 }
 
 
@@ -105,4 +81,8 @@ bukkit {
     apiVersion = "1.20"
     depend = listOf("ProtocolLib")
     description = "A Stamp plugin for Minecraft"
+    libraries = listOf(
+        "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.15.0",
+        "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.15.0"
+    )
 }

@@ -23,19 +23,19 @@ object StampManager: KoinComponent {
 
 
     private fun getImageStamp(shortCode: String): ImageStamp? {
-        if(get<LocalConfig>().type == FileType.LOCAL) {
+        if (get<LocalConfig>().type == FileType.LOCAL) {
             val file = plugin.dataFolder.resolve("image").resolve(shortCode.removePrefix("!"))
             if (!file.exists()) return null
-        }else{
+        } else {
             val s3Client = dev.nikomaru.minestamp.utils.Utils.getS3Client()
             val s3Config = get<LocalConfig>().s3Config!!
-            if(s3Client.doesObjectExist(s3Config.bucket, "image/${shortCode.removePrefix("!")}").not()) return null
+            if (s3Client.doesObjectExist(s3Config.bucket, "image/${shortCode.removePrefix("!")}").not()) return null
         }
         return ImageStamp(shortCode)
     }
 
     private fun getEmojiStamp(shortCode: String): EmojiStamp? {
-        val unicode = emojiProperties.getProperty(shortCode).lowercase().replace(" ", "_")
+        val unicode = emojiProperties.getProperty(shortCode)?.lowercase()?.replace(" ", "_") ?: return null
         val pictureName = "emoji_u${unicode}.png"
         plugin.javaClass.getResourceAsStream("/noto-emoji_128/$pictureName") ?: run {
             plugin.logger.warning("/noto-emoji_128/$pictureName is not found.")
@@ -45,7 +45,8 @@ object StampManager: KoinComponent {
     }
 
     fun getRandomStamp(): AbstractStamp? {
-        val map = get<HashMap<String, Int>>().map { (k, v) -> org.apache.commons.math3.util.Pair(k,v.toDouble()) }.toMutableList()
+        val map = get<HashMap<String, Int>>().map { (k, v) -> org.apache.commons.math3.util.Pair(k, v.toDouble()) }
+            .toMutableList()
         val enumeratedDistribution = EnumeratedDistribution(map)
         val randomShortCode = enumeratedDistribution.sample()
         return getStamp(randomShortCode)

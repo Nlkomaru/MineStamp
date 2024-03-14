@@ -1,6 +1,8 @@
 package dev.nikomaru.minestamp.listener
 
 import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerLoginEvent
@@ -9,11 +11,14 @@ import org.koin.core.component.get
 
 class LoginEvent: Listener, KoinComponent {
     @EventHandler
-    fun onLogin(event: PlayerLoginEvent) {
-        val playerStampManager = get<AbstractPlayerStampManager>()
-        with(playerStampManager){
-            init(event.player)
-            load(event.player)
+    suspend fun onLogin(event: PlayerLoginEvent) {
+        withContext(Dispatchers.IO) {
+            val playerStampManager = get<AbstractPlayerStampManager>()
+            val player = event.player
+            with(playerStampManager) {
+                init(player)
+                load(player)
+            }
         }
     }
 }

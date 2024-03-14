@@ -5,9 +5,10 @@ import com.auth0.jwt.algorithms.Algorithm
 import dev.nikomaru.minestamp.MineStamp
 import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
 import dev.nikomaru.minestamp.stamp.StampManager
+import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import dev.nikomaru.minestamp.utils.RSAUtils
 import dev.nikomaru.minestamp.utils.TicketUtils
-import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
+import kotlinx.coroutines.delay
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.event.EventHandler
@@ -26,7 +27,7 @@ class TicketInteractEvent: Listener, KoinComponent {
     private var rejectInteract = hashMapOf<UUID, Boolean>()
 
     @EventHandler
-    fun onTicketInteract(event: PlayerInteractEvent) {
+    suspend fun onTicketInteract(event: PlayerInteractEvent) {
         val item = event.item ?: return
         if (rejectInteract[event.player.uniqueId] == true) {
             event.isCancelled = true
@@ -78,8 +79,7 @@ class TicketInteractEvent: Listener, KoinComponent {
             }
         }
         rejectInteract[player.uniqueId] = true
-        plugin.server.scheduler.runTaskLater(plugin, Runnable {
-            rejectInteract[player.uniqueId] = false
-        }, 200 / 50)
+        delay(50)
+        rejectInteract.remove(player.uniqueId)
     }
 }
