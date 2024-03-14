@@ -11,7 +11,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission
 class ReloadCommand {
     @Subcommand("reload")
     @CommandPermission("minestamp.command.reload")
-    fun reload(sender : CommandSender) {
+    suspend fun reload(sender: CommandSender) {
         Config.loadConfig()
         sender.sendI18nRichMessage("reloaded-config")
     }

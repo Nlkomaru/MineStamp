@@ -1,5 +1,7 @@
 package dev.nikomaru.minestamp
 
+import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
+import com.github.shynixn.mccoroutine.bukkit.registerSuspendingEvents
 import dev.nikomaru.minestamp.command.ColorEmojiCommand
 import dev.nikomaru.minestamp.command.PlayerUtilCommand
 import dev.nikomaru.minestamp.command.PublishTicketCommand
@@ -14,6 +16,9 @@ import dev.nikomaru.minestamp.player.LocalPlayerStampManager
 import dev.nikomaru.minestamp.player.S3PlayerStampManager
 import dev.nikomaru.minestamp.stamp.AbstractStamp
 import dev.nikomaru.minestamp.utils.command.StampParser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -26,20 +31,21 @@ import java.awt.Font
 import java.util.*
 
 
-open class MineStamp: JavaPlugin(), KoinComponent {
+open class MineStamp: SuspendingJavaPlugin(), KoinComponent {
     lateinit var plugin: JavaPlugin
-
-    override fun onEnable() { // Plugin startup logic
+    override suspend fun onEnableAsync() {
+        logger.info("Is starting on Thread:${Thread.currentThread().name}/${Thread.currentThread().id}/primaryThread=${Bukkit.isPrimaryThread()}")
         plugin = this
         setKoin()
-
 
         if (!plugin.dataFolder.exists()) {
             plugin.dataFolder.mkdir()
         }
         val br = plugin.javaClass.classLoader.getResourceAsStream("emoji.properties")
         val emojiProperties = Properties()
-        emojiProperties.load(br)
+        withContext(Dispatchers.IO) {
+            emojiProperties.load(br)
+        }
 
         loadKoinModules(module {
             single { emojiProperties }
@@ -50,26 +56,24 @@ open class MineStamp: JavaPlugin(), KoinComponent {
                 )
             }
         })
-
+        logger.info("command setting")
+        setCommand()
+        logger.info("config setting")
         Config.loadConfig()
+        logger.info("stamp manager setting")
         val stampManager: AbstractPlayerStampManager =
             if (get<LocalConfig>().type == FileType.S3) {
                 S3PlayerStampManager()
             } else {
                 LocalPlayerStampManager()
             }
+
         loadKoinModules(module {
             single<AbstractPlayerStampManager> { stampManager }
         })
-        setCommand()
+        logger.info("listener setting")
         setListener()
     }
-
-
-    override fun onDisable() { // Plugin shutdown logic
-    }
-
-
 
     private fun setKoin() {
         val appModule = module {
@@ -92,11 +96,10 @@ open class MineStamp: JavaPlugin(), KoinComponent {
         commandHandle.setFlagPrefix("--")
         commandHandle.supportSuspendFunctions()
 
-        commandHandle.setHelpWriter { command, actor ->
+        commandHandle.setHelpWriter { command, _ ->
             java.lang.String.format(
                 """
-                <color:yellow>command: <color:gray>%s
-                <color:yellow>usage: <color:gray>%s
+                <color:yellow>command: <color:gray>%s %s
                 <color:yellow>description: <color:gray>%s
                 
                 """.trimIndent(),
@@ -117,9 +120,9 @@ open class MineStamp: JavaPlugin(), KoinComponent {
 
     }
 
-    fun setListener() {
-        server.pluginManager.registerEvents(LoginEvent(), this)
-        server.pluginManager.registerEvents(TicketInteractEvent(), this)
+    private fun setListener() {
+        server.pluginManager.registerSuspendingEvents(LoginEvent(), this)
+        server.pluginManager.registerSuspendingEvents(TicketInteractEvent(), this)
     }
 
 }
