@@ -42,7 +42,7 @@ dependencies {
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:$mccoroutineVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
 
-    implementation("com.amazonaws:aws-java-sdk-s3:1.12.671")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.686")
     library("org.apache.commons:commons-math3:3.6.1")
     compileOnly("com.comphenix.protocol:ProtocolLib:$protocolLibVersion")
     library("com.auth0:java-jwt:$jwtVersion")
