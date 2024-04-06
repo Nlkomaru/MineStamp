@@ -27,7 +27,7 @@ dependencies {
     val lampVersion = "3.1.9"
     val koinVersion = "3.5.3"
     val coroutineVersion = "1.8.0"
-    val serializationVersion = "1.6.2"
+    val serializationVersion = "1.6.3"
     val protocolLibVersion = "5.2.0-SNAPSHOT"
     val jwtVersion = "4.4.0"
 
