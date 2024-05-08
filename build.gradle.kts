@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.shadow)
     alias(libs.plugins.run.paper)
     alias(libs.plugins.resource.factory)
+
 }
 
 group = "dev.nikomaru"
@@ -39,6 +40,7 @@ dependencies {
     implementation(libs.awsJavaSdkS3)
     implementation(libs.commonsMath3)
     implementation(libs.javaJwt)
+
 }
 
 
