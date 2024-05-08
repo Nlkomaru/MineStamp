@@ -137,7 +137,7 @@ class ColorEmojiCommand: KoinComponent {
         val packet = pm.createPacket(PacketType.Play.Server.WORLD_PARTICLES)
         packet.newParticles.write(
             0, WrappedParticle.create(
-                Particle.REDSTONE, Particle.DustOptions(color, particleSize)
+                Particle.DUST, Particle.DustOptions(color, particleSize)
             )
         )
         val absX = locX + (x * cos(-locYaw.toDouble() / 180 * Math.PI))

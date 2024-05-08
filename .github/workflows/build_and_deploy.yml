@@ -1,7 +1,6 @@
 name: mc-publish
 
 on:
-  workflow_dispatch:
   release:
     types: [ published ]
 
@@ -15,14 +14,8 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
-
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -31,7 +24,7 @@ jobs:
         run: ./gradlew build
 
       - name: Change file name
-        run: mv ./build/libs/MineStamp-1.0-SNAPSHOT-all.jar ./build/libs/MineStamp_${{ steps.tag_version.outputs.new_tag }}.jar
+        run: mv ./build/libs/MineStamp-1.0-SNAPSHOT-all.jar ./build/libs/MineStamp_${{ github.event.release.tag_name }}.jar
 
       - uses: Kir-Antipov/mc-publish@v3.3
         with:
@@ -42,12 +35,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-draft: false
           files: |
-            ./build/libs/MineStamp_${{ steps.tag_version.outputs.new_tag }}.jar
+            ./build/libs/MineStamp_${{ github.event.release.tag_name }}.jar
           loaders: |
             paper
             purpur
           game-versions: |
-            1.20.4
+            1.20.6
           game-version-filter: releases
           java: |
-            17
+            21
