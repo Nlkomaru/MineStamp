@@ -1,0 +1,37 @@
+[versions]
+paper = "1.20.6-R0.1-SNAPSHOT"
+mccoroutine = "2.15.0"
+lamp = "3.2.1"
+koinVersion = "3.5.6"
+coroutine = "1.8.0"
+serialization = "1.6.3"
+awsJavaSdkS3 = "1.12.671"
+commonsMath3 = "3.6.1"
+protocolLib = "5.2.0-SNAPSHOT"
+javaJwt = "4.4.0"
+
+[libraries]
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+lamp-common = { group = "com.github.Revxrsal.Lamp", name = "common", version.ref = "lamp" }
+lamp-bukkit = { group = "com.github.Revxrsal.Lamp", name = "bukkit", version.ref = "lamp" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+mccoroutine-bukkit-api = { group = "com.github.shynixn.mccoroutine", name = "mccoroutine-bukkit-api", version.ref = "mccoroutine" }
+mccoroutine-bukkit-core = { group = "com.github.shynixn.mccoroutine", name = "mccoroutine-bukkit-core", version.ref = "mccoroutine" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koinVersion" }
+awsJavaSdkS3 = { group = "com.amazonaws", name = "aws-java-sdk-s3", version.ref = "awsJavaSdkS3" }
+commonsMath3 = { group = "org.apache.commons", name = "commons-math3", version.ref = "commonsMath3" }
+protocolLib = { group = "com.comphenix.protocol", name = "ProtocolLib", version.ref = "protocolLib" }
+javaJwt = { group = "com.auth0", name = "java-jwt", version.ref = "javaJwt" }
+
+[plugins]
+run-paper = { id = "xyz.jpenilla.run-paper", version = "2.3.0" }
+resource-factory = { id = "xyz.jpenilla.resource-factory", version = "1.1.1" }
+shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.24" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.24" }
+dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
+
+[bundles]
+commands = ["lamp-common", "lamp-bukkit"]
+coroutines = ["mccoroutine-bukkit-api", "mccoroutine-bukkit-core", "kotlinx-coroutines-core"]
