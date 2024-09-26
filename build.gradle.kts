@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.nikomaru"
-version = "1.0-SNAPSHOT"
+version = "1.0-SNAPSHOT"//Don't change
 
 repositories {
     mavenCentral()
@@ -60,7 +60,7 @@ tasks {
         dependsOn("shadowJar")
     }
     runServer {
-        minecraftVersion("1.20.6")
+        minecraftVersion("1.21")
     }
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
@@ -72,7 +72,7 @@ sourceSets.main {
     resourceFactory {
         bukkitPluginYaml {
             name = rootProject.name
-            version = project.version.toString()
+            version = "versionPlaceholder" //Don't change
             website = "https://github.com/Nlkomaru/AdvancedShopFinder"
             main = "$group.minestamp.MineStamp"
             apiVersion = "1.20"
