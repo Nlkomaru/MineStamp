@@ -1,11 +1,11 @@
 [versions]
-paper = "1.21.1-R0.1-SNAPSHOT"
+paper = "1.21.3-R0.1-SNAPSHOT"
 mccoroutine = "2.20.0"
 lamp = "3.3.0"
 koinVersion = "4.0.0"
 coroutine = "1.9.0"
 serialization = "1.7.3"
-awsJavaSdkS3 = "1.12.773"
+awsJavaSdkS3 = "1.12.776"
 commonsMath3 = "3.6.1"
 protocolLib = "5.2.0-SNAPSHOT"
 javaJwt = "4.4.0"

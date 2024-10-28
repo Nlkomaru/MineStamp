@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
@@ -10,7 +11,7 @@ plugins {
 }
 
 group = "dev.nikomaru"
-version = "1.0-SNAPSHOT"//Don't change
+version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -50,11 +51,11 @@ java {
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "21"
-        kotlinOptions.javaParameters = true
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+        compilerOptions.javaParameters = true
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "21"
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
     }
     build {
         dependsOn("shadowJar")

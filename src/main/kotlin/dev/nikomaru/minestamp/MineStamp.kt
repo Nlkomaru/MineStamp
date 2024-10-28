@@ -34,7 +34,7 @@ import java.util.*
 open class MineStamp: SuspendingJavaPlugin(), KoinComponent {
     lateinit var plugin: JavaPlugin
     override suspend fun onEnableAsync() {
-        logger.info("Is starting on Thread:${Thread.currentThread().name}/${Thread.currentThread().id}/primaryThread=${Bukkit.isPrimaryThread()}")
+        logger.info("Is starting on Thread:${Thread.currentThread().name}/${Thread.currentThread().threadId()}/primaryThread=${Bukkit.isPrimaryThread()}")
         plugin = this
         setKoin()
 
