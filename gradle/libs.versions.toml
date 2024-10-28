@@ -1,5 +1,5 @@
 [versions]
-paper = "1.21.1-R0.1-SNAPSHOT"
+paper = "1.21.3-R0.1-SNAPSHOT"
 mccoroutine = "2.20.0"
 lamp = "3.3.0"
 koinVersion = "4.0.0"
