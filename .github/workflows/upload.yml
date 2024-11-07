@@ -1,38 +1,44 @@
-name: upload_release
-
+name: mc-publish
 on:
   release:
     types: [ published ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v3
+    
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: 'gradle'
-
+    
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-
-      - name: Set plugin version
-        run: sed -i "s/versionPlaceholder/${{ github.event.release.tag_name }}/g" ./build.gradle.kts
-
+     
       - name: Build with Gradle
-        run: ./gradlew clean build -x test
-
-      - name: Rename jar
+        run: ./gradlew build
+     
+      - name: Change file name
         run: mv ./build/libs/MineStamp-1.0-SNAPSHOT-all.jar ./build/libs/MineStamp_${{ github.event.release.tag_name }}.jar
-
-      - name: Upload release
-        uses: softprops/action-gh-release@v2
+     
+      - uses: Kir-Antipov/mc-publish@v3.3
         with:
-          files: ./build/libs/MineStamp_${{ github.event.release.tag_name }}.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          modrinth-id: SdV5cyLq
+          modrinth-featured: true
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-draft: false
+          files: |
+            ./build/libs/MineStamp_${{ github.event.release.tag_name }}.jar
+          loaders: |
+            paper
+            purpur
+          dependencies: |
+            ProtocolLib@5.2.0(required)
+          game-versions: |
+            >=1.21
+          game-version-filter: releases
+          java: |
+            21
