@@ -1,17 +1,29 @@
-# MineStamp
+# MienStamp
+This is plugin to display emojis above your head in Minecraft.
 
-To summon an emoji in the minecraft world.
+## Source
+[https://github.com/Nlkomaru/MineStamp](https://github.com/Nlkomaru/MineStamp)
 
-## License 
-Written in 2022-2024 by Nikomaru &emsp; No Rights Reserved. <br>
+## Document
+[https://minestamp.plugin.nikomaru.page](https://minestamp.plugin.nikomaru.page)
 
-To the extent possible under law, Nikomaru has waived all copyright and related or neighboring rights to MineStamp. This work is published from: Japan.<br>
+## Feature
+- Support almost all unicode emoji
+- Multiple language support(en_US, ja_JP)
+- Multi server support by object storage(S3, minio, R2)
 
-You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+## Require
+[ProtocolLib](https://github.com/dmulloy2/ProtocolLib)
 
-<br>
+## License
+Written in 2022-2024 by Nikomaru. No Rights Reserved.
 
-And, this plugin include [Noto-Emoji](https://github.com/googlefonts/noto-emoji) fonts are under the SIL Open Font License, version 1.1.
+To the extent possible under law, Nikomaru has waived all copyright and related or neighboring rights to MineStamp. This work is published from: Japan.
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/).
 
 
+And, this plugin include Noto-Emoji fonts are under the SIL Open Font License, version 1.1.
 
+## Video
+
+https://github.com/user-attachments/assets/53124092-2dfc-4fe9-9ea2-6cdfc40487ea
