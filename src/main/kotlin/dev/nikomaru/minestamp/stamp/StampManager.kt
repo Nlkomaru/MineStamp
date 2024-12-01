@@ -12,7 +12,7 @@ import java.util.*
 object StampManager: KoinComponent {
     private val plugin: MineStamp by inject()
     private val emojiProperties: Properties by inject()
-    fun getStamp(shortCode: String): AbstractStamp? {
+    fun getStamp(shortCode: String): Stamp? {
         return when {
             shortCode.startsWith("!") -> getImageStamp(shortCode)
             shortCode.startsWith(":") -> getEmojiStamp(shortCode)
@@ -44,7 +44,7 @@ object StampManager: KoinComponent {
         return EmojiStamp(shortCode)
     }
 
-    fun getRandomStamp(): AbstractStamp? {
+    fun getRandomStamp(): Stamp? {
         val map = get<HashMap<String, Int>>().map { (k, v) -> org.apache.commons.math3.util.Pair(k, v.toDouble()) }
             .toMutableList()
         val enumeratedDistribution = EnumeratedDistribution(map)

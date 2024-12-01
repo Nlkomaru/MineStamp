@@ -60,7 +60,15 @@ tasks {
         dependsOn("shadowJar")
     }
     runServer {
-        minecraftVersion("1.21")
+        minecraftVersion("1.21.3")
+        val plugins = runPaper.downloadPluginsSpec {
+            github("Test-Account666", "PlugManX", "2.4.1","PlugManX-2.4.1.jar")
+            github("dmulloy2", "ProtocolLib", "5.3.0","ProtocolLib.jar")
+            github("jpenilla","TabTPS", "v1.3.25","tabtps-spigot-1.3.25.jar")
+        }
+        downloadPlugins {
+            downloadPlugins.from(plugins)
+        }
     }
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"

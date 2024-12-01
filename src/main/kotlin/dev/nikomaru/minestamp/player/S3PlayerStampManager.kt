@@ -6,7 +6,7 @@ import dev.nikomaru.minestamp.MineStamp
 import dev.nikomaru.minestamp.data.LocalConfig
 import dev.nikomaru.minestamp.data.PlayerData
 import dev.nikomaru.minestamp.data.PlayerDefaultEmojiConfigData
-import dev.nikomaru.minestamp.stamp.AbstractStamp
+import dev.nikomaru.minestamp.stamp.Stamp
 import dev.nikomaru.minestamp.utils.Utils.getS3Client
 import dev.nikomaru.minestamp.utils.Utils.json
 import kotlinx.serialization.encodeToString
@@ -46,13 +46,13 @@ class S3PlayerStampManager: AbstractPlayerStampManager(), KoinComponent {
         playerEmoji[player.uniqueId] = playerData.emoji
     }
 
-    override fun getPlayerStamp(player: Player): ArrayList<AbstractStamp> {
+    override fun getPlayerStamp(player: Player): ArrayList<Stamp> {
         val defaultStamp = get<PlayerDefaultEmojiConfigData>().defaultEmoji
         val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()
         return (playerStamp + defaultStamp).toCollection(arrayListOf())
     }
 
-    override fun addStamp(player: Player, stamp: AbstractStamp) {
+    override fun addStamp(player: Player, stamp: Stamp) {
         plugin.logger.info("addStamp: ${stamp.shortCode} to ${player.name}")
         val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()
         val newStamp = (playerStamp + stamp).toCollection(arrayListOf())
@@ -73,7 +73,7 @@ class S3PlayerStampManager: AbstractPlayerStampManager(), KoinComponent {
         s3Client.putObject(req)
     }
 
-    override fun removeStamp(player: Player, stamp: AbstractStamp) {
+    override fun removeStamp(player: Player, stamp: Stamp) {
         plugin.logger.info("removeStamp: ${stamp.shortCode} from ${player.name}")
         val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()
         val newStamp = (playerStamp - stamp).toCollection(arrayListOf())
@@ -89,7 +89,7 @@ class S3PlayerStampManager: AbstractPlayerStampManager(), KoinComponent {
         s3Client.putObject(req)
     }
 
-    override fun availableStamp(player: Player, stamp: AbstractStamp): Boolean {
+    override fun availableStamp(player: Player, stamp: Stamp): Boolean {
         if(player.hasPermission("minestamp.stamp.all")) return true
         val default = get<PlayerDefaultEmojiConfigData>().defaultEmoji
         val playerStamp = playerEmoji[player.uniqueId] ?: emptyList()

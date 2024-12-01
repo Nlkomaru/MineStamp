@@ -5,7 +5,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.awt.image.BufferedImage
 
-abstract class AbstractStamp(var shortCode: String): KoinComponent {
+abstract class Stamp(var shortCode: String): KoinComponent {
     val plugin: MineStamp by inject()
     lateinit var image: BufferedImage
 

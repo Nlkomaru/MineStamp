@@ -5,7 +5,7 @@ import org.koin.core.component.inject
 import java.util.*
 import javax.imageio.ImageIO
 
-class EmojiStamp(shortCode: String): AbstractStamp(shortCode), KoinComponent {
+class EmojiStamp(shortCode: String): Stamp(shortCode), KoinComponent {
     private val emojiProperties: Properties by inject()
     var char: String
 

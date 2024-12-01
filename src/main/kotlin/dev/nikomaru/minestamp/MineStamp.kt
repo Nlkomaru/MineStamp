@@ -6,6 +6,7 @@ import dev.nikomaru.minestamp.command.ColorEmojiCommand
 import dev.nikomaru.minestamp.command.PlayerUtilCommand
 import dev.nikomaru.minestamp.command.PublishTicketCommand
 import dev.nikomaru.minestamp.command.ReloadCommand
+import dev.nikomaru.minestamp.command.parser.StampArgumentParser
 import dev.nikomaru.minestamp.data.FileType
 import dev.nikomaru.minestamp.data.LocalConfig
 import dev.nikomaru.minestamp.files.Config
@@ -14,19 +15,21 @@ import dev.nikomaru.minestamp.listener.TicketInteractEvent
 import dev.nikomaru.minestamp.player.AbstractPlayerStampManager
 import dev.nikomaru.minestamp.player.LocalPlayerStampManager
 import dev.nikomaru.minestamp.player.S3PlayerStampManager
-import dev.nikomaru.minestamp.stamp.AbstractStamp
-import dev.nikomaru.minestamp.utils.command.StampParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
+import org.incendo.cloud.annotations.AnnotationParser
+import org.incendo.cloud.execution.ExecutionCoordinator
+import org.incendo.cloud.kotlin.coroutines.annotations.installCoroutineSupport
+import org.incendo.cloud.paper.LegacyPaperCommandManager
+import org.incendo.cloud.setting.ManagerSetting
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
-import revxrsal.commands.bukkit.BukkitCommandHandler
-import revxrsal.commands.ktx.supportSuspendFunctions
 import java.awt.Font
 import java.util.*
 
@@ -87,35 +90,23 @@ open class MineStamp: SuspendingJavaPlugin(), KoinComponent {
     }
 
     private fun setCommand() {
-        val commandHandle = BukkitCommandHandler.create(this)
-        loadKoinModules(module {
-            single { commandHandle }
-        })
+        val commandManager = LegacyPaperCommandManager.createNative(
+            this,
+            ExecutionCoordinator.simpleCoordinator()
+        )
 
-        commandHandle.setSwitchPrefix("--")
-        commandHandle.setFlagPrefix("--")
-        commandHandle.supportSuspendFunctions()
 
-        commandHandle.setHelpWriter { command, _ ->
-            java.lang.String.format(
-                """
-                <color:yellow>command: <color:gray>%s %s
-                <color:yellow>description: <color:gray>%s
-                
-                """.trimIndent(),
-                command.path.toList(),
-                command.usage,
-                command.description,
+        commandManager.settings().set(ManagerSetting.ALLOW_UNSAFE_REGISTRATION, true)
+
+        commandManager.parserRegistry().registerParser(StampArgumentParser.stampParser())
+
+        val annotationParser = AnnotationParser(commandManager, CommandSender::class.java)
+        annotationParser.installCoroutineSupport()
+
+        with(annotationParser) {
+            parse(
+                ColorEmojiCommand(), PublishTicketCommand(), ReloadCommand(), PlayerUtilCommand()
             )
-        }
-
-        commandHandle.registerValueResolver(AbstractStamp::class.java, StampParser)
-
-        with(commandHandle) {
-            register(ColorEmojiCommand())
-            register(PublishTicketCommand())
-            register(ReloadCommand())
-            register(PlayerUtilCommand())
         }
 
     }

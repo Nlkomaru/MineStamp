@@ -8,7 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import javax.imageio.ImageIO
 
-class ImageStamp(shortCode: String): AbstractStamp(shortCode), KoinComponent {
+class ImageStamp(shortCode: String): Stamp(shortCode), KoinComponent {
     init {
         val config = get<LocalConfig>()
         if (config.type == FileType.LOCAL) {

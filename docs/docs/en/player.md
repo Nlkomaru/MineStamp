@@ -1,7 +1,7 @@
 # Player documentation
 
 ## Commands list
-command: `/st <shortCode>`, `/stamp <shortCode>`, `/minestamp stamp <shortCode>`<br>
+command: `/st <shortCode>`, `/stamp <shortCode>`<br>
 example: `/stamp :sleeping-face:`<br>
 description: Display emoji overhead.<br>
 `<shortCode>` must be a emoji shortcode.<br>

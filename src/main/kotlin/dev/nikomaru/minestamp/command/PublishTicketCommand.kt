@@ -3,30 +3,29 @@ package dev.nikomaru.minestamp.command
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import dev.nikomaru.minestamp.MineStamp
-import dev.nikomaru.minestamp.stamp.AbstractStamp
+import dev.nikomaru.minestamp.stamp.Stamp
 import dev.nikomaru.minestamp.utils.RSAUtils.getRSAKeyPair
 import dev.nikomaru.minestamp.utils.TicketUtils.getRouletteTicket
 import dev.nikomaru.minestamp.utils.TicketUtils.getUniqueTicket
 import dev.nikomaru.minestamp.utils.LangUtils.sendI18nRichMessage
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.incendo.cloud.annotations.Command
+import org.incendo.cloud.annotations.CommandDescription
+import org.incendo.cloud.annotations.Permission
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import revxrsal.commands.annotation.Command
-import revxrsal.commands.annotation.Description
-import revxrsal.commands.annotation.Subcommand
-import revxrsal.commands.bukkit.annotation.CommandPermission
 import java.security.KeyPairGenerator
 
 
 @Command("minestamp")
-@CommandPermission("minestamp.command.publish")
+@Permission("minestamp.command.publish")
 class PublishTicketCommand: KoinComponent {
     val plugin: MineStamp by inject()
 
-    @Subcommand("generate keyPair")
-    @Description("Generate private and public keys.")
-    @CommandPermission("minestamp.command.publish.generate")
+    @Command("generate keyPair")
+    @CommandDescription("Generate private and public keys.")
+    @Permission("minestamp.command.publish.generate")
     fun generateKeyPairs(actor: CommandSender) {
         val privateKeyFile = plugin.dataFolder.resolve("privateKey")
         val publicKeyFile = plugin.dataFolder.resolve("publicKey")
@@ -46,9 +45,9 @@ class PublishTicketCommand: KoinComponent {
         actor.sendI18nRichMessage("generate-keyPair")
     }
 
-    @Subcommand("publish roulette")
-    @Description("Generate tickets for roulette.")
-    @CommandPermission("minestamp.command.publish.roulette")
+    @Command("publish roulette")
+    @CommandDescription("Generate tickets for roulette.")
+    @Permission("minestamp.command.publish.roulette")
     fun publishRandom(actor: Player) {
         val rsaKey = getRSAKeyPair() ?: run {
             actor.sendI18nRichMessage("not-found-keyPair")
@@ -61,10 +60,10 @@ class PublishTicketCommand: KoinComponent {
         actor.inventory.addItem(ticket)
     }
 
-    @Subcommand("publish unique")
-    @Description("Generate unique tickets.")
-    @CommandPermission("minestamp.command.publish.unique")
-    fun publishUnique(actor: Player, stamp: AbstractStamp) {
+    @Command("publish unique")
+    @CommandDescription("Generate unique tickets.")
+    @Permission("minestamp.command.publish.unique")
+    fun publishUnique(actor: Player, stamp: Stamp) {
         val rsaKey = getRSAKeyPair() ?: run {
             actor.sendI18nRichMessage("not-found-keyPair")
             actor.sendI18nRichMessage("need-generate-keyPair")

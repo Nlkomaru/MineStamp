@@ -3,7 +3,7 @@ package dev.nikomaru.minestamp.utils
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import dev.nikomaru.minestamp.MineStamp
-import dev.nikomaru.minestamp.stamp.AbstractStamp
+import dev.nikomaru.minestamp.stamp.Stamp
 import dev.nikomaru.minestamp.stamp.EmojiStamp
 import dev.nikomaru.minestamp.stamp.StampManager
 import dev.nikomaru.minestamp.utils.LangUtils.getI18nMessage
@@ -29,7 +29,7 @@ object TicketUtils: KoinComponent {
         return ticket
     }
 
-    fun getUniqueTicket(algorithm: Algorithm, stamp: AbstractStamp): ItemStack {
+    fun getUniqueTicket(algorithm: Algorithm, stamp: Stamp): ItemStack {
         val ticket = ItemStack(Material.PAPER)
         val jwt =
             JWT.create().withIssuer("minestamp").withClaim("type", "unique").withClaim("shortCode", stamp.shortCode)

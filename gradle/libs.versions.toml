@@ -1,7 +1,8 @@
 [versions]
 paper = "1.21.1-R0.1-SNAPSHOT"
 mccoroutine = "2.20.0"
-lamp = "3.3.0"
+cloud = "2.0.0"
+cloudPaper = "2.0.0-beta.10"
 koinVersion = "4.0.0"
 coroutine = "1.9.0"
 serialization = "1.7.3"
@@ -12,8 +13,12 @@ javaJwt = "4.4.0"
 
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
-lamp-common = { group = "com.github.Revxrsal.Lamp", name = "common", version.ref = "lamp" }
-lamp-bukkit = { group = "com.github.Revxrsal.Lamp", name = "bukkit", version.ref = "lamp" }
+cloud = { group = "org.incendo", name = "cloud-core", version.ref = "cloud" }
+cloud-annotations = { group = "org.incendo", name = "cloud-annotations", version.ref = "cloud" }
+cloudPaper = { group = "org.incendo", name = "cloud-paper", version.ref = "cloudPaper" }
+cloud-kotlin-extensions = {group = "org.incendo", name = "cloud-kotlin-extensions", version.ref = "cloud"}
+cloud-kotlin-coroutines = {group = "org.incendo", name = "cloud-kotlin-coroutines", version.ref = "cloud"}
+cloud-kotlin-coroutines-annotations = {group = "org.incendo", name = "cloud-kotlin-coroutines-annotations", version.ref = "cloud"}
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 mccoroutine-bukkit-api = { group = "com.github.shynixn.mccoroutine", name = "mccoroutine-bukkit-api", version.ref = "mccoroutine" }
@@ -33,5 +38,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
 
 [bundles]
-commands = ["lamp-common", "lamp-bukkit"]
+commands = ["cloud", "cloudPaper", "cloud-annotations", "cloud-kotlin-extensions", "cloud-kotlin-coroutines", "cloud-kotlin-coroutines-annotations"]
 coroutines = ["mccoroutine-bukkit-api", "mccoroutine-bukkit-core", "kotlinx-coroutines-core"]

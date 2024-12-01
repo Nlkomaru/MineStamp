@@ -1,6 +1,6 @@
 package dev.nikomaru.minestamp.data
 
-import dev.nikomaru.minestamp.stamp.AbstractStamp
+import dev.nikomaru.minestamp.stamp.Stamp
 import dev.nikomaru.minestamp.stamp.StampManager
 import kotlinx.serialization.Serializable
 
@@ -10,7 +10,7 @@ data class PlayerDefaultEmojiConfigData(
     val size: Double = 1.8,
     val particleSize: Double = 1.0,
     val accuracy: Int = 32,
-    val defaultEmoji: List<@Serializable(with = AbstractStampSerializer::class) AbstractStamp> = arrayListOf(
+    val defaultEmoji: List<@Serializable(with = AbstractStampSerializer::class) Stamp> = arrayListOf(
         ":cucumber:", ":thinking-face:", ":angry-face:", ":sleeping-face:"
     ).mapNotNull { StampManager.getStamp(it) },
     val waitSecond : Double = 5.0
