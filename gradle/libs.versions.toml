@@ -3,13 +3,13 @@ paper = "1.21.4-R0.1-SNAPSHOT"
 mccoroutine = "2.20.0"
 cloud = "2.0.0"
 cloudPaper = "2.0.0-SNAPSHOT"
-koinVersion = "4.0.1"
+koinVersion = "4.0.2"
 coroutine = "1.10.1"
 serialization = "1.7.3"
 awsJavaSdkS3 = "1.12.780"
 commonsMath3 = "3.6.1"
-protocolLib = "5.2.0-SNAPSHOT"
-javaJwt = "4.4.0"
+protocolLib = "5.3.0"
+javaJwt = "4.5.0"
 
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
@@ -33,8 +33,8 @@ javaJwt = { group = "com.auth0", name = "java-jwt", version.ref = "javaJwt" }
 run-paper = { id = "xyz.jpenilla.run-paper", version = "2.3.1" }
 resource-factory = { id = "xyz.jpenilla.resource-factory", version = "1.2.0" }
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.0" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "2.1.0" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.10" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "2.1.10" }
 dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }
 
 [bundles]

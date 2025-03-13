@@ -36,9 +36,9 @@ jobs:
             paper
             purpur
           dependencies: |
-            ProtocolLib@5.2.0(required)
+            ProtocolLib@5.4.0(required)
           game-versions: |
-            >=1.21
+            >=1.21.4
           game-version-filter: releases
           java: |
             21

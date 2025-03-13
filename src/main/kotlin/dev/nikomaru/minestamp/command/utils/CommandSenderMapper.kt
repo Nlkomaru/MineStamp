@@ -29,6 +29,14 @@ class CommandSenderMapper: SenderMapper<CommandSourceStack, CommandSender> {
             override fun getExecutor(): Entity? {
                 return sender as? Entity
             }
+
+            override fun withLocation(location: Location): CommandSourceStack {
+                return sender as CommandSourceStack
+            }
+
+            override fun withExecutor(executor: Entity): CommandSourceStack {
+                return sender as CommandSourceStack
+            }
         }
     }
 }

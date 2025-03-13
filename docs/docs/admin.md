@@ -1,38 +1,38 @@
 # Administrator documentation
 
 ## Introduction.
-Generate public and private keys on the server<br>
-To run `/stamp generate keyPair`<br>
+Generate public and private keys on the server<br />
+To run `/stamp generate keyPair`<br />
 
-If there is more than one server, this should be copied. <br>
+If there is more than one server, this should be copied. <br />
 In addition, S3 is used for multiple servers, so configure S3 settings in config.json on each server.
 
 ## List of administrative commands
-command: `/minestamp advance <abstract stamp> [time] [size] [particle size] [accuracy]`<br>
-example: `/minestamp advance :cucumber: 1 3 1.5 32`<br>
-description: Generates more advanced stamps.<br>
+command: `/minestamp advance <abstract stamp> [time] [size] [particle size] [accuracy]`<br />
+example: `/minestamp advance :cucumber: 1 3 1.5 32`<br />
+description: Generates more advanced stamps.<br />
 
-command: `/minestamp generate keypair`<br>
-description: Generate private and public keys.<br>
+command: `/minestamp generate keypair`<br />
+description: Generate private and public keys.<br />
 
-command: `/minestamp publish roulette`<br>
-description: Generate tickets for roulette.<br>
+command: `/minestamp publish roulette`<br />
+description: Generate tickets for roulette.<br />
 
-command: `/minestamp publish unique <stamp>`<br>
-example: `/minestamp publish unique :cucumber:`<br>
-description: Generate a ticket to activate a specific stamp<br>
+command: `/minestamp publish unique <stamp>`<br />
+example: `/minestamp publish unique :cucumber:`<br />
+description: Generate a ticket to activate a specific stamp<br />
 
-command: `/minestamp reload`<br>
-description: Reloads the settings. Also, if images etc. are added, they will be reflected by executing this command.<br>
+command: `/minestamp reload`<br />
+description: Reloads the settings. Also, if images etc. are added, they will be reflected by executing this command.<br />
 
 ## Add language settings
 
 Add a file with the language code in the lang directory. The file name is the language code. The file format is
-properties. <br>
-example:`zh_CN.properties`, `fr_FR.properties` <br>
-defaultSupportedLanguage: `en_US`, `ja_JP` <br>
-if you want to add a new language, please create a file with the language code in the lang directory. <br>
-original file is [here](https://github.com/Nlkomaru/MineStamp/blob/master/src/main/resources/lang/en_US.properties) <br>
+properties. <br />
+example:`zh_CN.properties`, `fr_FR.properties` <br />
+defaultSupportedLanguage: `en_US`, `ja_JP` <br />
+if you want to add a new language, please create a file with the language code in the lang directory. <br />
+original file is [here](https://github.com/Nlkomaru/MineStamp/blob/master/src/main/resources/lang/en_US.properties) <br />
 
 
 ## Configuration file and directory structure

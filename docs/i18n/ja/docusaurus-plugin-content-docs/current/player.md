@@ -1,13 +1,13 @@
 # プレイヤー向けドキュメント
 
 ## コマンド一覧
-command: `/st <shortCode>`, `/stamp <shortCode>`, `/minestamp stamp <shortCode>`<br>
-demo: `/stamp :sleeping-face:`<br>
-description: 絵文字を頭上に表示します。<br>
-`<shortCode>`には、絵文字のショートコードを指定してください。<br>
+command: `/st <shortCode>`, `/stamp <shortCode>`, `/minestamp stamp <shortCode>`<br />
+demo: `/stamp :sleeping-face:`<br />
+description: 絵文字を頭上に表示します。<br />
+`<shortCode>`には、絵文字のショートコードを指定してください。<br />
 
-command:`/minestamp list`<br>
-description: スタンプの一覧を表示します。<br>
+command:`/minestamp list`<br />
+description: スタンプの一覧を表示します。<br />
 
 ## 基本的な使い方
 1. コマンドを入力してください。 具体例: `/stamp :sleeping-face:`
@@ -20,7 +20,7 @@ description: スタンプの一覧を表示します。<br>
 2. ルーレットチケットを持っている状態で右クリックします。
 3. 特定の絵文字を入手するためのチケットがもらえます。
 4. 自分で使うことも、他のプレイヤーに渡すこともできます。
-5. 自分で使う場合は、[特定の絵文字用のチケットの使い方](#_5)を参照してください。
+5. 自分で使う場合は、[特定の絵文字用のチケットの使い方](#特定の絵文字用のチケットの使い方)を参照してください。
 
 ## 特定の絵文字用のチケットの使い方
 1. 特定の絵文字用のチケットを入手します。

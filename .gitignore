@@ -1,7 +1,7 @@
 # User-specific stuff
 .idea/
 
-docs/site/**
+docs-archive/site/**
 
 *.iml
 *.ipr
