@@ -15,7 +15,7 @@ For this emoji, we have pulled it from [noto-emoji repository](https://github.co
 ## License
 License
 
-Written in 2022-2024 by Nikomaru. No Rights Reserved.
+Written in 2022-2025 by Nikomaru. No Rights Reserved.
 
 To the extent possible under law, Nikomaru has waived all copyright and related or neighboring rights to MineStamp. This work is published from: Japan.<br />
 You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see [About CC0](http://creativecommons.org/publicdomain/zero/1.0/).

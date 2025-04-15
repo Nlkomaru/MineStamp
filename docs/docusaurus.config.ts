@@ -40,7 +40,7 @@ const config: Config = {
                     sidebarPath: "./sidebars.ts",
                     routeBasePath: "/",
                     editUrl:
-                        "https://github.com/nlkomaru/minecraftpluginmanager/tree/master/docs/",
+                        "https://github.com/nlkomaru/mine-stamp/tree/master/docs/",
                 },
                 theme: {
                     customCss: "./src/css/custom.css",
@@ -139,6 +139,9 @@ const config: Config = {
             darkTheme: prismThemes.dracula,
         },
     } satisfies Preset.ThemeConfig,
+    future: {
+        experimental_faster: true,
+    },
 };
 
 export default config;
