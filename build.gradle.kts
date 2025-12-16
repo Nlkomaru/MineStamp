@@ -22,7 +22,6 @@ repositories {
     maven("https://jitpack.io")
     maven("https://plugins.gradle.org/m2/")
     maven("https://repo.incendo.org/content/repositories/snapshots")
-    maven("https://repo.dmulloy2.net/repository/public/")
 }
 
 dependencies {
